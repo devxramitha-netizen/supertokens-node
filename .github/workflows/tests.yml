@@ -38,6 +38,13 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: "16"
+            - name: Cache npm dependencies
+              uses: actions/cache@v4
+              with:
+                path: ~/.npm
+                key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+                restore-keys: |
+                  ${{ runner.os }}-node-
             - name: Make git use https instead of ssh
               run: git config --global url."https://github.com/".insteadOf ssh://git@github.com/
             - run: npm i --force
